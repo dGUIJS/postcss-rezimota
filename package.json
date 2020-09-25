@@ -1,0 +1,89 @@
+{
+  "name": "@dguijs/postcss-rezimota",
+  "version": "0.0.0",
+  "description": "PostCSS plugin for generating CSS using ACSS classes",
+  "main": "dist/postcss-rezimota.cjs",
+  "module": "dist/postcss-rezimota.mjs",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "acss"
+  ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "lint": "eslint \"{src,tests}/**/*.js\"",
+    "build": "rlb",
+    "pretest": "npm run lint",
+    "test": "nyc mocha \"tests/**/*.js\" --timeout 15000 --require @babel/register",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "version": "npm test && npm run build && git add -f dist/",
+    "postversion": "git rm -r --cached dist/ && git commit -m \"chore(dist): clean after release [ci skip]\" && git push origin && git push origin --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dGUIJS/postcss-rezimota.git"
+  },
+  "author": "dGUIJS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com//dGUIJS/postcss-rezimota/issues"
+  },
+  "homepage": "https://github.com//dGUIJS/postcss-rezimota#readme",
+  "peerDependencies": {
+    "postcss": "^8.0.2"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.11.5",
+    "@comandeer/eslint-config": "^0.2.2",
+    "@comandeer/rollup-lib-bundler": "^0.11.0",
+    "chai": "^4.2.0",
+    "codecov": "^3.7.2",
+    "commitplease": "^3.2.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.9.0",
+    "eslint-ci": "^1.0.0",
+    "husky": "^4.3.0",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "postcss": "^8.0.9",
+    "rimraf": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitplease": {
+    "nohook": true,
+    "style": "angular",
+    "types": [
+      "feat",
+      "fix",
+      "docs",
+      "style",
+      "refactor",
+      "perf",
+      "test",
+      "build",
+      "ci",
+      "chore",
+      "revert"
+    ],
+    "scope": "\\S+.*"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "dist/**/*.js",
+      "tests/**/*.js"
+    ]
+  }
+}
