@@ -1,7 +1,15 @@
-function plugin() {
+import aliases from './aliases.js';
 
+function plugin() {
 	return {
-		postcssPlugin: 'postcss-rezimota'
+		postcssPlugin: 'postcss-rezimota',
+		Declaration( declaration ) {
+			if ( !aliases.has( declaration.prop ) ) {
+				return;
+			}
+
+			declaration.prop = aliases.get( declaration.prop );
+		}
 	};
 }
 
