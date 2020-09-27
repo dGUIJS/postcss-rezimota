@@ -1,4 +1,5 @@
-import { Declaration, Rule } from 'postcss';
+import { Declaration } from 'postcss';
+import { Rule } from 'postcss';
 import aliases from './aliases.js';
 
 function plugin() {
