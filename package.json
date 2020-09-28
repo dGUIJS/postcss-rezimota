@@ -1,6 +1,6 @@
 {
   "name": "@dguijs/postcss-rezimota",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "PostCSS plugin for generating CSS using ACSS classes",
   "main": "dist/postcss-rezimota.cjs",
   "module": "dist/postcss-rezimota.mjs",
