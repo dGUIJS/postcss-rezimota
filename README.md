@@ -10,8 +10,8 @@ Input:
 
 ```css
 .container {
-	Bgc(red);
-	P(20px);
+	@Bgc(red);
+	p: 20px;
 }
 ```
 
@@ -27,7 +27,7 @@ Output:
 ## Installation
 
 ```bash
-npm install @dGUIJS/postcss-rezimota --save-dev
+npm install @dguijs/postcss-rezimota --save-dev
 ```
 
 ## Usage

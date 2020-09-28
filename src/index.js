@@ -13,7 +13,9 @@ function plugin() {
 				return;
 			}
 
-			declaration.prop = alias;
+			const newDeclarations = createDeclarations( alias, declaration.value );
+
+			declaration.replaceWith( ...newDeclarations );
 		},
 
 		AtRule( atRule ) {
@@ -28,12 +30,9 @@ function plugin() {
 			}
 
 			const value = parseParams( atRule.params );
-			const declaration = new Declaration( {
-				prop: alias,
-				value
-			} );
+			const declarations = createDeclarations( alias, value );
 
-			atRule.replaceWith( declaration );
+			atRule.replaceWith( ...declarations );
 		}
 	};
 }
@@ -42,8 +41,22 @@ plugin.postcss = true;
 
 function getAlias( name, aliases ) {
 	name = name.toLowerCase();
+	const alias = aliases.get( name );
 
-	return aliases.get( name );
+	if ( alias && !Array.isArray( alias ) ) {
+		return [ alias ];
+	}
+
+	return alias;
+}
+
+function createDeclarations( aliases, value ) {
+	return aliases.map( ( prop ) => {
+		return new Declaration( {
+			prop,
+			value
+		} );
+	} );
 }
 
 function parseParams( params ) {
