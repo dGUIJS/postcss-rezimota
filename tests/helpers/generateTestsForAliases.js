@@ -3,11 +3,15 @@ import assertTransform from './assertTransform.js';
 function generateTestsForAliases( aliasesMap ) {
 	const aliases = [ ...aliasesMap ];
 
-	aliases.forEach( ( [ alias, declaration ] ) => {
+	aliases.forEach( ( [ alias, declarations ] ) => {
 		describe( alias, () => {
-			const commonOutput = `div { ${ declaration }: hublabubla; }`;
+			if ( !Array.isArray( declarations ) ) {
+				declarations = [ declarations ];
+			}
 
-			it( `${ declaration } declaration is generated from ${ alias } declaration`, () => {
+			const commonOutput = generateOutput( declarations );
+
+			it( `${ declarations.join( ',' ) } declarations are generated from ${ alias } declaration`, () => {
 				const input = `div { ${ alias }: hublabubla; }`;
 				const output = commonOutput;
 
@@ -21,7 +25,7 @@ function generateTestsForAliases( aliasesMap ) {
 				return assertTransform( input, output );
 			} );
 
-			it( `${ declaration } declaration is generated from @${ alias } at-rule`, () => {
+			it( `${ declarations.join( ',' ) } declarations are generated from @${ alias } at-rule`, () => {
 				const input = `div { @${ alias }( hublabubla ); }`;
 				const output = commonOutput;
 
@@ -43,6 +47,14 @@ function generateTestsForAliases( aliasesMap ) {
 			} );
 		} );
 	} );
+}
+
+function generateOutput( expected ) {
+	const rules = expected.map( ( declaration ) => {
+		return `${ declaration }: hublabubla`;
+	} );
+
+	return `div { ${ rules.join( '; ' ) }; }`;
 }
 
 function shuffleCase( string ) {
